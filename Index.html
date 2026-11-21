@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>English Hub – Phonics Book</title>
+<style>
+:root{
+  color-scheme:dark;
+  --blue:#3b8bf0; --blue-d:#1b4f9c; --blue-l:#4aa3f2; --blue-xl:#1d2c47;
+  --orange:#f58220; --orange-d:#ffa05a; --orange-xl:#3a2b1c;
+  --ink:#e6eef9; --sub:#a9bddb; --head:#8fc4ff;
+  --bg:#0d1524; --card:#16213a; --good:#4cd98a; --bad:#ff6b6b;
+  --shadow:0 6px 18px rgba(0,0,0,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Trebuchet MS","Segoe UI",Tahoma,system-ui,sans-serif;line-height:1.45}
+a{color:var(--head)}
+
+/* ---------- Cover ---------- */
+.cover{background:linear-gradient(180deg,var(--bg) 0%,var(--blue-xl) 100%);text-align:center;padding:36px 16px 28px;border-bottom:6px solid var(--orange)}
+.logo{display:inline-flex;flex-direction:column;align-items:center;gap:6px}
+/* To use your real logo image instead, put logo.png next to this file and replace
+   the <div class="bubble"> ... </div> with: <img src="logo.png" style="width:150px"> */
+.bubble{width:130px;height:124px;border-radius:50%;position:relative;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 22%,var(--blue-l),var(--blue) 58%,var(--blue-d));box-shadow:var(--shadow)}
+.bubble:after{content:"";position:absolute;left:14px;bottom:2px;width:30px;height:30px;background:var(--blue-d);
+  border-radius:0 0 0 0;clip-path:polygon(0 100%,100% 0,100% 100%);transform:translate(-4px,6px)}
+.eh{display:flex;gap:0;font-weight:900;font-size:46px;line-height:1}
+.eh span{display:grid;place-items:center;width:50px;height:58px;border-radius:12px;color:#fff;text-shadow:0 2px 2px rgba(0,0,0,.25)}
+.eh .e{background:linear-gradient(160deg,#5db3ff,#2a7fe0)}
+.eh .h{background:linear-gradient(160deg,#ffa24d,var(--orange))}
+.brand{font-size:44px;font-weight:900;letter-spacing:.5px;margin:0}
+.brand .b1{color:var(--blue)} .brand .b2{color:var(--orange)}
+.cover h1{margin:14px 0 4px;font-size:clamp(24px,5vw,38px);color:var(--head)}
+.cover p.sub{margin:0 auto;max-width:620px;font-size:17px}
+.toc{max-width:760px;margin:22px auto 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.toc a{display:block;background:var(--card);border:2px solid var(--blue-l);border-radius:14px;padding:10px 12px;text-decoration:none;font-weight:700;color:var(--head);box-shadow:var(--shadow);transition:.15s}
+.toc a:hover{transform:translateY(-2px);background:var(--orange-xl);border-color:var(--orange)}
+.toc small{display:block;font-weight:400;color:var(--sub)}
+
+/* ---------- Nav ---------- */
+.nav{position:sticky;top:0;z-index:20;background:#12306a;display:flex;gap:4px;overflow-x:auto;padding:6px 8px;box-shadow:0 3px 10px rgba(0,0,0,.2)}
+.nav a{color:#fff;text-decoration:none;font-weight:700;padding:7px 12px;border-radius:999px;white-space:nowrap;font-size:15px}
+.nav a:hover,.nav a:focus{background:var(--orange)}
+
+main{max-width:1100px;margin:0 auto;padding:10px 14px 50px}
+.banner{margin:14px 0;padding:10px 14px;border-radius:12px;font-size:14px;display:none}
+.banner.show{display:block}
+.banner.warn{background:#3d3210;border:1px solid #8a6d1c}
+.banner.info{background:var(--blue-xl);border:1px solid var(--blue-l)}
+
+section{padding-top:26px}
+.sec-head{display:flex;align-items:center;justify-content:space-between;gap:10px;border-bottom:4px solid var(--orange);margin-bottom:14px}
+.sec-head h2{margin:0;font-size:clamp(22px,4vw,30px);color:var(--head)}
+.sec-head a{font-size:13px;text-decoration:none;font-weight:700;color:var(--orange-d);white-space:nowrap}
+.lead{margin:0 0 14px;font-size:16px}
+
+/* ---------- Alphabet strip ---------- */
+.az{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.az a{width:36px;height:36px;display:grid;place-items:center;border-radius:10px;background:var(--blue);color:#fff;font-weight:800;text-decoration:none}
+.az a:nth-child(even){background:var(--orange)}
+.az a:hover{transform:scale(1.12)}
+
+/* ---------- Cards ---------- */
+.grid{display:grid;gap:16px}
+.letters{grid-template-columns:repeat(auto-fill,minmax(290px,1fr))}
+.groups{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+.card{background:var(--card);border-radius:20px;box-shadow:var(--shadow);padding:14px;border-top:6px solid var(--blue);scroll-margin-top:60px}
+.card.o{border-top-color:var(--orange)}
+.card:target{outline:4px solid var(--orange)}
+.card-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.big{font-size:54px;font-weight:900;line-height:1;color:var(--blue);min-width:90px}
+.big small{color:var(--orange);font-size:44px}
+.card.o .big{color:var(--orange-d)}
+.meta{flex:1;min-width:120px}
+.meta .nm{font-weight:800;font-size:18px}
+.ipa{display:inline-block;background:var(--orange-xl);color:var(--orange-d);border-radius:8px;padding:1px 8px;font-weight:700;font-family:"Segoe UI",Arial,sans-serif}
+.tip{font-size:14.5px;margin:8px 0 2px;color:var(--sub)}
+.hl{color:var(--orange-d);font-weight:900}
+.chips{display:grid;grid-template-columns:repeat(auto-fit,minmax(112px,1fr));gap:8px;margin-top:10px}
+.chip{background:var(--blue-xl);border-radius:14px;padding:8px;text-align:center}
+.chip .emo{font-size:30px;line-height:1.1}
+.chip .w{font-size:20px;font-weight:800;margin:0}
+.wline{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:2px 0 4px}
+.ib.sm{width:34px;height:34px}
+.ib.sm svg{width:17px;height:17px}
+.ph{font-family:"Segoe UI","Noto Sans","Lucida Sans Unicode","DejaVu Sans",Arial,sans-serif;color:var(--head);font-size:14px;font-weight:600;margin:0 0 2px;text-align:center;direction:ltr;letter-spacing:.2px}
+.winfo .ph{text-align:left;margin:0}
+.res.good,.res.bad{font-size:14px}
+.chip .am{font-size:15px;font-weight:700;color:var(--orange-d);margin:0 0 6px;text-align:center;line-height:1.3}
+.row{display:flex;justify-content:center;gap:6px}
+.res{font-size:12.5px;min-height:16px;margin-top:4px;font-weight:700}
+.res.info{color:var(--head)} .res.good{color:var(--good)} .res.mid{color:var(--orange-d)} .res.bad{color:var(--bad)}
+
+/* icon buttons */
+.ib{border:0;cursor:pointer;width:40px;height:40px;border-radius:50%;display:inline-grid;place-items:center;color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.2);transition:.1s}
+.ib:active{transform:translateY(2px);box-shadow:none}
+.ib svg{width:20px;height:20px;fill:currentColor}
+.ib.spk{background:var(--blue)} .ib.spk:hover{background:var(--blue-d)}
+.ib.mic{background:var(--orange)} .ib.mic:hover{background:var(--orange-d)}
+.ib.rec{background:var(--bad);animation:pulse 1s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(214,69,69,.6)}100%{box-shadow:0 0 0 14px rgba(214,69,69,0)}}
+.tb{border:0;cursor:pointer;border-radius:999px;padding:7px 12px;font-weight:800;color:#fff;background:var(--blue);font-size:14px;display:inline-flex;align-items:center;gap:6px;box-shadow:0 3px 0 rgba(0,0,0,.2)}
+.tb svg{width:16px;height:16px;fill:currentColor}
+.tb.o{background:var(--orange)}
+.tb:active{transform:translateY(2px);box-shadow:none}
+
+/* sentences */
+.sent{margin-top:12px;border:2px dashed var(--blue-l);border-radius:14px;padding:10px;background:rgba(255,255,255,.03)}
+.sent .st{font-size:18px;font-weight:700;margin-bottom:8px}
+.sent .row{justify-content:flex-start;flex-wrap:wrap;align-items:center}
+
+/* vowel panels */
+.vgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:12px}
+.panel{background:rgba(255,255,255,.03);border:2px solid var(--blue-xl);border-radius:16px;padding:10px}
+.panel h4{margin:0 0 4px;color:var(--head);font-size:17px}
+.panel.long h4{color:var(--orange-d)}
+.vwrap{margin-bottom:18px}
+
+/* ---------- Useful Words ---------- */
+.ar{direction:rtl;text-align:right;font-family:"Segoe UI",Tahoma,"Noto Naskh Arabic",Arial,sans-serif}
+body.hide-ar .ar{display:none}
+.vtools{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.fb{border:2px solid var(--blue-l);background:transparent;color:var(--ink);cursor:pointer;border-radius:999px;padding:7px 14px;font-weight:700;font-size:14px;font-family:inherit}
+.fb:hover{border-color:var(--orange)}
+.fb.on{background:var(--orange);border-color:var(--orange);color:#fff}
+.cover .fb{color:var(--ink)}
+select.fb{background:var(--card)}
+select.fb option{background:#16213a;color:#e6eef9}
+.vh{margin:0 0 12px;font-size:20px;color:var(--head)}
+.vh .ar{display:inline;color:var(--orange-d);font-size:18px}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.wcard{background:rgba(255,255,255,.04);border:2px solid var(--blue-xl);border-radius:16px;padding:10px}
+.wtop{display:flex;align-items:center;gap:8px}
+.winfo{flex:1;min-width:0}
+.ww{font-size:22px;font-weight:900;color:var(--ink)}
+.wm{font-size:17px;color:var(--orange-d);font-weight:700}
+.sent .wa{font-size:15px;color:var(--sub);margin:-2px 0 8px}
+
+footer{background:var(--blue-d);color:#fff;padding:22px 14px;text-align:center}
+footer b{color:#ffc58e}
+.notes{max-width:800px;margin:0 auto;text-align:left;font-size:14.5px}
+.notes li{margin:4px 0}
+@media print{.nav,.ib,.tb{display:none}.card{break-inside:avoid}}
+</style>
+</head>
+<body>
+
+<header class="cover" id="top">
+  <div class="logo">
+    <div class="bubble"><div class="eh"><span class="e">E</span><span class="h">H</span></div></div>
+    <p class="brand"><span class="b1">English</span> <span class="b2">Hub</span></p>
+  </div>
+  <h1>Phonics Book: Alphabet &amp; Sounds</h1>
+  <p class="sub">Tap <b style="color:var(--blue)">🔊 the blue button</b> to listen. Tap <b style="color:var(--orange-d)">🎤 the orange button</b> to read aloud and get feedback.</p>
+  <p style="margin:12px 0 0"><button type="button" class="fb artog" onclick="toggleAr()">🇪🇬 إخفاء العربي</button></p>
+  <p class="vtools" style="justify-content:center;margin:10px 0 0">
+    <button type="button" class="fb" id="btnTest">🎤 Test microphone · اختبار الميكروفون</button>
+    <button type="button" class="fb" id="btnOffline">⬇️ Prepare offline mode · تجهيز الوضع بدون إنترنت</button>
+    <select id="engSel" class="fb" aria-label="Speech engine">
+      <option value="auto">Speech engine: Auto</option>
+      <option value="browser">Browser / Google</option>
+      <option value="whisper">Whisper AI (works in more browsers)</option>
+    </select>
+  </p>
+  <div id="testRes" class="res info" style="text-align:center;font-size:14px;max-width:640px;margin:6px auto 0"></div>
+  <div class="toc">
+    <a href="#alphabet">1. The Alphabet<small>A–Z, names, sounds, examples</small></a>
+    <a href="#vowels">2. Vowels<small>a e i o u – short &amp; long</small></a>
+    <a href="#teams">3. Vowel Teams<small>ee, ai, oa, oo, ou, ar, or…</small></a>
+    <a href="#consonants">4. Special Sounds<small>sh ch th wh ph ck ng qu kn wr gh</small></a>
+    <a href="#endings">5. Word Endings<small>tion, sion, ture, su</small></a>
+    <a href="#special">6. Foreign Spellings<small>dh and kh</small></a>
+    <a href="#practice">7. Reading Practice<small>Sentences to read aloud</small></a>
+    <a href="#words">8. Useful Words<small>كلمات مفيدة + ترجمة + أمثلة</small></a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Book sections">
+  <a href="#top">🏠 Home</a><a href="#alphabet">Alphabet</a><a href="#vowels">Vowels</a><a href="#teams">Vowel Teams</a>
+  <a href="#consonants">Special Sounds</a><a href="#endings">Endings</a><a href="#special">dh / kh</a><a href="#practice">Practice</a><a href="#words">Words</a>
+</nav>
+
+<main>
+  <div class="banner warn" id="bnTTS"></div>
+  <div class="banner info" id="bnMic"></div>
+
+  <section id="alphabet">
+    <div class="sec-head"><h2>1. The English Alphabet</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">26 letters. For each letter: listen to its <b>name</b>, its <b>sound</b>, then practise the example words and the sentence.</p>
+    <div class="az" id="az"></div>
+    <div class="grid letters" id="letters"></div>
+  </section>
+
+  <section id="vowels">
+    <div class="sec-head"><h2>2. Vowel Sounds: a e i o u</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">Each vowel has a <b>short</b> sound and a <b>long</b> sound (the long sound says its own name). A silent <b>e</b> at the end of a word (cake, bike, home) often makes the vowel long: the “magic e”.</p>
+    <div id="vowelBox"></div>
+  </section>
+
+  <section id="teams">
+    <div class="sec-head"><h2>3. Vowel Teams &amp; R-Sounds</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">When two vowels walk together, they make one new sound.</p>
+    <div class="grid groups" id="teamBox"></div>
+  </section>
+
+  <section id="consonants">
+    <div class="sec-head"><h2>4. Special Consonant Sounds</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">Two or more letters can make one sound. The <span class="hl">orange</span> letters show the sound.</p>
+    <div class="grid groups" id="consBox"></div>
+  </section>
+
+  <section id="endings">
+    <div class="sec-head"><h2>5. Word Endings: tion, sion, ture, su</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">These endings are very common. Learn them as one chunk.</p>
+    <div class="grid groups" id="endBox"></div>
+  </section>
+
+  <section id="special">
+    <div class="sec-head"><h2>6. “dh” and “kh” in Foreign Words</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">“dh” and “kh” are <b>not</b> normal English spellings. You will only see them in names and words borrowed from other languages. The English sounds you may be looking for are <b>th</b> (this) and <b>k</b>/<b>h</b>.</p>
+    <div class="grid groups" id="spBox"></div>
+  </section>
+
+  <section id="practice">
+    <div class="sec-head"><h2>7. Reading Practice</h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">Listen first (🔊 normal, 🐢 slow), then press 🎤 and read the whole sentence.</p>
+    <div id="practiceBox"></div>
+  </section>
+
+  <section id="words">
+    <div class="sec-head"><h2>8. Useful Words <span class="ar" style="font-size:.8em;color:var(--orange-d)">كلمات مفيدة</span></h2><a href="#top">↑ Contents</a></div>
+    <p class="lead">Common words for daily life, work and conversation. Each word has its <b>Arabic meaning</b>, an <b>example sentence</b> and its <b>Arabic translation</b>. Listen 🔊 and say it 🎤.</p>
+    <div class="vtools" id="vocCtl"></div>
+    <div id="vocBox"></div>
+  </section>
+</main>
+
+<footer>
+  <p style="margin:0 0 8px"><b>English</b> Hub · Phonics Book</p>
+  <div class="notes">
+    <ul>
+      <li>🔊 The sounds come from the voice installed on your phone or computer, so the book works without internet when an English voice is installed.</li>
+      <li>🎤 Chrome and Edge use an online service to check speech, so scoring needs internet. Without it, the book records your voice, plays it back, then plays the model so you can compare.</li>
+      <li>The first time you press 🎤, allow the microphone. Not working? Press “Test microphone” at the top of the page. The microphone needs a secure page: open the book from an https link (Netlify Drop, GitHub Pages) or in Chrome, not from a WhatsApp / Drive / file-manager preview.</li>
+      <li>🌐 No internet? Press “Prepare offline mode” once while you are online. It saves the English speech model on your device, and after that the 🎤 buttons can check your words without internet.</li>
+      <li>Speech engines: <b>Auto</b> uses the browser’s Google speech recognition and switches to <b>Whisper AI</b> (open-source, runs inside the browser) if it fails.</li>
+      <li>✅ Say the word: if it is right you see “صحيح · Correct”, if not you see “غلط · Wrong”. The line like /ˈæpəl/ under each word is the American English pronunciation (IPA).</li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+"use strict";
+/* ======================= SPEECH: LISTEN ======================= */
+const synth = window.speechSynthesis || null;
+let voice = null;
+function pickVoice(){
+  if(!synth) return;
+  const vs = synth.getVoices();
+  if(!vs.length) return;
+  const en = vs.filter(v=>/^en/i.test(v.lang));
+  voice = en.find(v=>/en[-_]US/i.test(v.lang) && v.localService) ||
+          en.find(v=>v.localService) ||
+          en.find(v=>/en[-_]US/i.test(v.lang)) || en[0] || null;
+}
+if(synth){ pickVoice(); synth.onvoiceschanged = pickVoice; }
+function speak(text, rate){
+  if(!synth){ alert("Your browser cannot speak. Please open this file in Chrome, Edge or Safari."); return; }
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = voice ? voice.lang : "en-US";
+  if(voice) u.voice = voice;
+  u.rate = rate || 0.85;
+  setTimeout(()=>synth.speak(u),30);
+}
+
+/* ======================= SPEECH: MIC ======================= */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition || null;
+let curRec = null, curMedia = null;
+const NUM = {"0":"zero","1":"one","2":"two","3":"three","4":"four","5":"five","6":"six","7":"seven","8":"eight","9":"nine","10":"ten"};
+function norm0(s){
+  return s.toLowerCase().replace(/\b\d+\b/g,m=>NUM[m]||m).replace(/[^a-z\s]/g,"").replace(/\s+/g," ").trim();
+}
+let HOMO_MAP=null;
+function norm(s){
+  if(!HOMO_MAP){ HOMO_MAP={}; HOMO_GROUPS.forEach(g=>g.forEach(w=>{HOMO_MAP[w]=g[0];})); }
+  return norm0(s).split(" ").map(w=>HOMO_MAP[w]||w).join(" ");
+}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  const d=Array.from({length:m+1},(_,i)=>{const r=new Array(n+1).fill(0);r[0]=i;return r;});
+  for(let j=1;j<=n;j++) d[0][j]=j;
+  for(let i=1;i<=m;i++) for(let j=1;j<=n;j++)
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+(a[i-1]===b[j-1]?0:1));
+  return d[m][n];
+}
+function score(target,said){
+  const a=norm(target), b=norm(said);
+  if(!a||!b) return 0;
+  return 1 - lev(a,b)/Math.max(a.length,b.length);
+}
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
+function setRes(out,cls,html){ out.className="res "+cls; out.innerHTML=html; }
+function judge(target,alts,out){
+  const t=norm(target);
+  if(alts.some(a=>norm(a)===t)){
+    setRes(out,"good","✅ صحيح · Correct!<br>You said: “"+esc(alts.find(a=>norm(a)===t))+"”");
+    return true;
+  }
+  const said=alts[0]||"";
+  let extra="";
+  const tw=t.split(" ");
+  if(tw.length>1){
+    const pool=norm(said).split(" ").filter(Boolean);
+    const bad=[];
+    tw.forEach(w=>{const i=pool.indexOf(w); if(i>-1) pool.splice(i,1); else bad.push(w);});
+    if(bad.length) extra="<br>Check: "+esc(bad.join(", "));
+  }
+  setRes(out,"bad","❌ غلط · Wrong. Listen 🔊 and try again.<br>You said: “"+esc(said)+"”"+extra);
+  return false;
+}
+function stopAll(){
+  if(curRec){ try{curRec.abort();}catch(e){} curRec=null; }
+  if(curMedia && curMedia.state==="recording"){ try{curMedia.stop();}catch(e){} }
+  if(synth) synth.cancel();
+}
+let ENGINE="auto", micToken=0, LOCAL_OK=false;
+try{ ENGINE=localStorage.getItem("eh_engine")||"auto"; }catch(e){}
+
+function micHelp(e){
+  const n=String((e&&(e.name||e.error))||e||"");
+  if(window.isSecureContext===false || /Security/i.test(n))
+    return "Microphone needs a secure page (https). Open this book from an https link (for example Netlify Drop or GitHub Pages) or from localhost.";
+  if(/NotAllowed|not-allowed|Permission/i.test(n))
+    return "Microphone is blocked. Tap the 🔒 / ⓘ icon next to the address bar → Site settings → Microphone → Allow, then reload the page. If you opened this file from WhatsApp, Drive or a file-manager preview, open it in Chrome instead.";
+  if(/NotFound|DevicesNotFound/i.test(n)) return "No microphone was found on this device.";
+  if(/NotReadable|TrackStart/i.test(n)) return "The microphone is busy. Close other apps that use it, then try again.";
+  return "Microphone problem: "+(n||"unknown")+". Try Chrome or Edge.";
+}
+
+/* ---- Test microphone button ---- */
+async function testMic(){
+  const out=document.getElementById("testRes");
+  if(!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia){
+    setRes(out,"bad","❌ "+micHelp({name:"Security"})); return;
+  }
+  setRes(out,"info","Asking for the microphone…");
+  try{
+    const s=await navigator.mediaDevices.getUserMedia({audio:true});
+    const AC=window.AudioContext||window.webkitAudioContext;
+    const ac=new AC(); const an=ac.createAnalyser();
+    ac.createMediaStreamSource(s).connect(an);
+    const buf=new Uint8Array(an.fftSize); let peak=0; const t0=Date.now();
+    setRes(out,"good","✅ Microphone allowed. Say something now… (3 seconds)");
+    await new Promise(res=>{
+      const id=setInterval(()=>{
+        an.getByteTimeDomainData(buf);
+        for(let i=0;i<buf.length;i++) peak=Math.max(peak,Math.abs(buf[i]-128));
+        if(Date.now()-t0>3000){ clearInterval(id); res(); }
+      },60);
+    });
+    s.getTracks().forEach(t=>t.stop()); try{ac.close();}catch(e){}
+    if(peak>6) setRes(out,"good","✅ The microphone works. I can hear you.");
+    else setRes(out,"mid","⚠️ Permission is OK but I heard almost nothing. Speak closer or raise the phone volume.");
+  }catch(e){ setRes(out,"bad","❌ "+micHelp(e)); }
+}
+
+/* ---- Recording with automatic stop after you finish speaking ---- */
+function capture(out,b,maxMs){
+  return new Promise(async (resolve,reject)=>{
+    let stream;
+    try{ stream=await navigator.mediaDevices.getUserMedia({audio:true}); }catch(e){ reject(e); return; }
+    const mr=new MediaRecorder(stream); curMedia=mr;
+    const chunks=[]; let ac=null, timer=null, spoke=false;
+    mr.ondataavailable=e=>{ if(e.data.size) chunks.push(e.data); };
+    mr.onstop=()=>{
+      clearInterval(timer);
+      stream.getTracks().forEach(t=>t.stop());
+      try{ ac&&ac.close(); }catch(e){}
+      resolve({blob:new Blob(chunks,{type:mr.mimeType||"audio/webm"}),spoke:spoke});
+    };
+    b.classList.add("rec");
+    setRes(out,"info","🔴 Listening… speak now");
+    mr.start();
+    const t0=Date.now(); let last=t0;
+    try{
+      const AC=window.AudioContext||window.webkitAudioContext;
+      ac=new AC(); const an=ac.createAnalyser();
+      ac.createMediaStreamSource(stream).connect(an);
+      const buf=new Uint8Array(an.fftSize);
+      timer=setInterval(()=>{
+        an.getByteTimeDomainData(buf);
+        let mx=0; for(let i=0;i<buf.length;i++) mx=Math.max(mx,Math.abs(buf[i]-128));
+        const now=Date.now();
+        if(mx>8){ spoke=true; last=now; }
+        if(mr.state==="recording" && ((spoke && now-last>900) || now-t0>maxMs)) mr.stop();
+      },80);
+    }catch(e){
+      spoke=true;
+      setTimeout(()=>{ if(mr.state==="recording") mr.stop(); }, Math.min(maxMs,3500));
+    }
+  });
+}
+
+/* ---- Whisper AI (open-source, runs inside the browser) ---- */
+let asrP=null;
+function getASR(out){
+  if(!asrP){
+    asrP=(async()=>{
+      const T=await import("https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.2");
+      T.env.allowLocalModels=false;
+      return T.pipeline("automatic-speech-recognition","Xenova/whisper-tiny.en",{
+        progress_callback:p=>{
+          if(p && p.status==="progress" && typeof p.progress==="number")
+            setRes(out,"info","⬇️ Loading the speech model "+Math.round(p.progress)+"% (first time only)");
+        }
+      });
+    })().catch(e=>{ asrP=null; throw e; });
+  }
+  return asrP;
+}
+async function toPCM(blob){
+  const AC=window.AudioContext||window.webkitAudioContext;
+  const ac=new AC();
+  const buf=await ac.decodeAudioData(await blob.arrayBuffer());
+  try{ac.close();}catch(e){}
+  if(buf.sampleRate===16000) return buf.getChannelData(0);
+  const off=new OfflineAudioContext(1,Math.max(1,Math.ceil(buf.duration*16000)),16000);
+  const src=off.createBufferSource(); src.buffer=buf; src.connect(off.destination); src.start();
+  const r=await off.startRendering();
+  return r.getChannelData(0);
+}
+function playbackFallback(target,out,blob){
+  const a=new Audio(URL.createObjectURL(blob));
+  setRes(out,"info","▶ Your voice… (speech check needs internet the first time)");
+  a.onended=()=>{ setRes(out,"info","🔊 Now the model. Compare!"); speak(target,0.85); };
+  a.play().catch(()=>setRes(out,"bad","Could not play the recording."));
+}
+async function whisperFlow(target,out,b,tok){
+  if(!navigator.mediaDevices || !window.MediaRecorder){
+    setRes(out,"bad","❌ "+micHelp({name:"Security"})); return;
+  }
+  let cap;
+  try{ cap=await capture(out,b,Math.max(4000,Math.min(12000,2500+target.length*130))); }
+  catch(e){ b.classList.remove("rec"); setRes(out,"bad","❌ "+micHelp(e)); return; }
+  b.classList.remove("rec");
+  if(tok!==micToken) return;
+  if(!cap.spoke){ setRes(out,"bad","I did not hear you. Try again."); return; }
+  setRes(out,"info","⏳ Checking your voice…");
+  try{
+    const asr=await getASR(out);
+    if(tok!==micToken) return;
+    const pcm=await toPCM(cap.blob);
+    if(pcm.length<2400){ setRes(out,"bad","I did not hear you. Try again."); return; }
+    const r=await asr(pcm);
+    if(tok!==micToken) return;
+    const text=String((r&&r.text)||"").trim();
+    if(!text){ setRes(out,"bad","I did not hear you. Try again."); return; }
+    judge(target,[text],out);
+  }catch(e){
+    if(tok!==micToken) return;
+    playbackFallback(target,out,cap.blob);
+  }
+}
+
+/* ---- Prepare offline mode (one-time download) ---- */
+async function prepareOffline(){
+  const out=document.getElementById("testRes");
+  const msgs=[];
+  try{
+    if(SR && SR.available && SR.install){
+      const st=await SR.available({langs:["en-US"],processLocally:true});
+      if(st==="available"){ LOCAL_OK=true; msgs.push("✅ Chrome's on-device English speech is ready."); }
+      else if(st==="downloadable" || st==="downloading"){
+        setRes(out,"info","⬇️ Downloading Chrome's English speech pack…");
+        const ok=await SR.install({langs:["en-US"],processLocally:true});
+        LOCAL_OK=!!ok;
+        msgs.push(ok?"✅ Chrome's on-device English speech is installed.":"⚠️ Chrome could not install its offline pack.");
+      }
+    }
+  }catch(e){}
+  if(!LOCAL_OK){
+    try{
+      setRes(out,"info","⬇️ Downloading the offline speech model (about 40 MB, one time)…");
+      await getASR(out);
+      msgs.push("✅ The Whisper AI speech model is saved on this device.");
+    }catch(e){
+      msgs.push("❌ Could not download the model. Connect to the internet and press this button again.");
+      setRes(out,"bad",msgs.join("<br>")); return;
+    }
+  }
+  setRes(out,"good",msgs.join("<br>")+"<br>Now the 🎤 buttons can work without internet.");
+}
+
+/* ---- Main mic button ---- */
+function mic(target,out,b){
+  stopAll();
+  document.querySelectorAll(".ib.rec").forEach(x=>x.classList.remove("rec"));
+  const tok=++micToken;
+  if(ENGINE==="whisper" || !SR || (!navigator.onLine && !LOCAL_OK)){ whisperFlow(target,out,b,tok); return; }
+  const r=new SR(); curRec=r;
+  if(LOCAL_OK){ try{ r.processLocally=true; }catch(e){} }
+  r.lang="en-US"; r.interimResults=false; r.maxAlternatives=5; r.continuous=false;
+  let done=false, fell=false;
+  b.classList.add("rec");
+  setRes(out,"info","🎤 Listening… speak now");
+  const fallback=()=>{ fell=true; b.classList.remove("rec"); whisperFlow(target,out,b,tok); };
+  r.onresult=ev=>{
+    done=true;
+    judge(target,Array.from(ev.results[0]).map(a=>a.transcript),out);
+  };
+  r.onerror=ev=>{
+    if(ev.error==="no-speech"){ done=true; setRes(out,"bad","I did not hear you. Try again."); }
+    else if(ev.error==="aborted"){ done=true; }
+    else if(ENGINE==="browser" && ev.error==="not-allowed"){ done=true; setRes(out,"bad","❌ "+micHelp({name:"NotAllowedError"})); }
+    else if(!done){ done=true; fallback(); }
+  };
+  r.onend=()=>{
+    if(!fell) b.classList.remove("rec");
+    if(!done && !fell) setRes(out,"bad","I did not hear you. Try again.");
+    if(curRec===r) curRec=null;
+  };
+  try{ r.start(); }catch(e){ done=true; fallback(); }
+}
+
+/* ======================= UI HELPERS ======================= */
+const AR_WORDS={"apple": "تفاحة", "ant": "نملة", "add": "يجمع / يضيف", "ball": "كورة", "bed": "سرير", "bus": "أتوبيس", "cat": "قطة", "cup": "كوباية", "car": "عربية", "dog": "كلب", "duck": "بطة", "door": "باب", "egg": "بيضة", "elephant": "فيل", "end": "نهاية", "fish": "سمكة", "fan": "مروحة", "frog": "ضفدع", "goat": "ماعز", "gift": "هدية", "green": "أخضر", "hat": "قبعة", "house": "بيت", "horse": "حصان", "insect": "حشرة", "ink": "حبر", "itch": "يحكّ / هرش", "juice": "عصير", "jump": "يقفز", "jelly": "جيلي", "kite": "طيارة ورق", "king": "ملك", "key": "مفتاح", "lion": "أسد", "lamp": "لمبة / أباجورة", "leg": "رِجل", "moon": "قمر", "milk": "لبن", "monkey": "قرد", "nest": "عش", "nose": "أنف", "net": "شبكة", "orange": "برتقال", "octopus": "أخطبوط", "olive": "زيتون", "pen": "قلم", "pig": "خنزير", "pizza": "بيتزا", "queen": "ملكة", "quick": "سريع", "quiz": "اختبار قصير", "rabbit": "أرنب", "red": "أحمر", "rain": "مطر", "sun": "شمس", "sock": "شراب", "sand": "رمل", "tiger": "نمر", "table": "ترابيزة", "ten": "عشرة", "umbrella": "شمسية", "up": "فوق", "under": "تحت", "van": "ميكروباص / فان", "vase": "فازة", "violin": "كمان", "watch": "ساعة يد / يتفرج", "water": "مياه", "wind": "ريح", "box": "صندوق", "fox": "ثعلب", "six": "ستة", "yellow": "أصفر", "yes": "أيوه", "yogurt": "زبادي", "zebra": "حمار وحشي", "zoo": "حديقة الحيوان", "zip": "سوسته", "map": "خريطة", "bag": "شنطة", "man": "راجل", "cake": "تورتة / كيك", "name": "اسم", "game": "لعبة", "late": "متأخر", "make": "يعمل", "plate": "طبق", "men": "رجالة", "me": "أنا (ضمير)", "she": "هي", "we": "إحنا", "be": "يكون", "these": "دول", "Pete": "بيت (اسم)", "sit": "يقعد", "big": "كبير", "ship": "سفينة", "bike": "عجلة / موتوسيكل", "time": "وقت", "five": "خمسة", "like": "يحب", "nine": "تسعة", "pot": "حلة", "top": "فوق / قمة", "hot": "سخن", "clock": "ساعة حائط", "home": "بيت / منزل", "bone": "عضمة", "rope": "حبل", "go": "يروح", "stone": "حجر", "run": "يجري", "cute": "لطيف / كيوت", "use": "يستخدم", "mule": "بغل", "huge": "ضخم", "tube": "أنبوبة", "June": "يونيو", "see": "يشوف", "tree": "شجرة", "sleep": "ينام", "feet": "أقدام", "sheep": "خروف", "eat": "ياكل", "tea": "شاي", "read": "يقرأ", "sea": "بحر", "beach": "شاطئ", "leaf": "ورقة شجر", "train": "قطر", "mail": "بريد", "tail": "ذيل", "paint": "يرسم / دهان", "snail": "قوقعة / حلزون", "day": "يوم", "play": "يلعب", "say": "يقول", "stay": "يفضل / يقعد", "tray": "صينية", "Monday": "يوم الاثنين", "boat": "مركب", "coat": "جاكت / بالطو", "road": "طريق", "soap": "صابون", "toast": "توست", "food": "أكل", "school": "مدرسة", "spoon": "معلقة", "pool": "حمام سباحة", "room": "أوضة", "book": "كتاب", "look": "ينظر / يبص", "foot": "قدم", "good": "كويس / جيد", "cook": "يطبخ", "wood": "خشب", "out": "بره", "cloud": "سحابة", "mouse": "فار", "mouth": "بق / فم", "round": "مدوّر", "cow": "بقرة", "down": "تحت / لتحت", "brown": "بني", "now": "دلوقتي", "town": "بلد / مدينة صغيرة", "flower": "وردة", "snow": "تلج", "grow": "يكبر / ينمو", "show": "يعرض / يوري", "slow": "بطيء", "window": "شباك", "coin": "عملة معدنية", "oil": "زيت", "boil": "يغلي", "boy": "ولد", "toy": "لعبة (أطفال)", "enjoy": "يستمتع", "saw": "شاف / منشار", "paw": "كف الحيوان", "draw": "يرسم", "August": "أغسطس", "cause": "سبب", "sauce": "صلصة", "star": "نجمة", "farm": "مزرعة", "park": "حديقة / يركن", "shark": "قرش", "garden": "جنينة", "corn": "ذرة", "fork": "شوكة", "north": "شمال", "storm": "عاصفة", "short": "قصير", "her": "ليها / هي", "bird": "عصفور", "turn": "يلف / دور", "nurse": "ممرضة", "girl": "بنت", "burger": "برجر", "shop": "محل", "shoe": "جزمة", "wash": "يغسل", "chair": "كرسي", "cheese": "جبنة", "chicken": "فراخ", "lunch": "غدا", "children": "أطفال", "think": "يفكر", "three": "تلاتة", "thank": "يشكر", "bath": "حمام (استحمام)", "thumb": "إبهام", "this": "ده / دي", "that": "ده / دي (بعيد)", "the": "(أداة تعريف: ال)", "mother": "أم", "brother": "أخ", "with": "مع", "what": "إيه", "when": "إمتى", "where": "فين", "white": "أبيض", "whale": "حوت", "wheel": "عجلة / كاوتش", "phone": "تليفون", "photo": "صورة", "dolphin": "دولفين", "alphabet": "حروف الهجاء", "graph": "رسم بياني", "black": "أسود", "back": "ضهر / رجوع", "truck": "عربية نقل", "sing": "يغني", "ring": "خاتم / رنين", "long": "طويل", "song": "أغنية", "morning": "صباح", "quiet": "هادي", "question": "سؤال", "square": "مربع / ميدان", "knee": "ركبة", "knife": "سكينة", "know": "يعرف", "knock": "يخبّط", "knot": "عقدة", "knight": "فارس", "write": "يكتب", "wrong": "غلط", "wrap": "يلف / يغلّف", "wrist": "رسغ / معصم", "wrinkle": "تجعيدة", "wrote": "كتب", "night": "ليل", "light": "نور / خفيف", "high": "عالي", "right": "صح / يمين", "bright": "مضيء / ذكي", "eight": "تمانية", "laugh": "يضحك", "enough": "كفاية", "cough": "كحّة", "rough": "خشن", "tough": "قوي / صعب", "laughter": "ضحك", "nation": "أمة / شعب", "station": "محطة", "action": "فعل / حركة", "education": "تعليم", "information": "معلومات", "vacation": "إجازة", "vision": "رؤية / نظر", "television": "تلفزيون", "decision": "قرار", "division": "قسمة / قسم", "conclusion": "خاتمة / استنتاج", "confusion": "لخبطة / ارتباك", "mission": "مهمة", "session": "جلسة", "discussion": "نقاش", "permission": "إذن", "tension": "توتر", "expression": "تعبير", "picture": "صورة / لوحة", "nature": "الطبيعة", "future": "المستقبل", "adventure": "مغامرة", "creature": "مخلوق", "culture": "ثقافة", "sugar": "سكر", "sure": "متأكد", "ensure": "يتأكد / يضمن", "insurance": "تأمين", "assure": "يطمّن", "usual": "المعتاد", "usually": "عادةً", "measure": "يقيس", "treasure": "كنز", "pleasure": "سعادة / يسعدني", "leisure": "وقت فراغ", "Dhaka": "دكا (عاصمة بنجلاديش)", "dhal": "دال (أكلة عدس هندية)", "dhow": "داو (مركب شراعي عربي)", "Abu Dhabi": "أبوظبي", "khaki": "كاكي (لون)", "Khan": "خان (اسم / لقب)", "Khartoum": "الخرطوم", "Khaled": "خالد"};
+const IPA_WORDS={"apple": "/ˈæpəl/", "ant": "/ænt/", "add": "/æd/", "ball": "/bɔl/", "bed": "/bɛd/", "bus": "/bʌs/", "cat": "/kæt/", "cup": "/kʌp/", "car": "/kɑr/", "dog": "/dɔɡ/", "duck": "/dʌk/", "door": "/dɔr/", "egg": "/ɛɡ/", "elephant": "/ˈɛləfənt/", "end": "/ɛnd/", "fish": "/fɪʃ/", "fan": "/fæn/", "frog": "/frɔɡ/", "goat": "/ɡoʊt/", "gift": "/ɡɪft/", "green": "/ɡrin/", "hat": "/hæt/", "house": "/haʊs/", "horse": "/hɔrs/", "insect": "/ˈɪnsɛkt/", "ink": "/ɪŋk/", "itch": "/ɪtʃ/", "juice": "/dʒus/", "jump": "/dʒʌmp/", "jelly": "/ˈdʒɛli/", "kite": "/kaɪt/", "king": "/kɪŋ/", "key": "/ki/", "lion": "/ˈlaɪən/", "lamp": "/læmp/", "leg": "/lɛɡ/", "moon": "/mun/", "milk": "/mɪlk/", "monkey": "/ˈmʌŋki/", "nest": "/nɛst/", "nose": "/noʊz/", "net": "/nɛt/", "orange": "/ˈɔrɪndʒ/", "octopus": "/ˈɑktəpəs/", "olive": "/ˈɑlɪv/", "pen": "/pɛn/", "pig": "/pɪɡ/", "pizza": "/ˈpitsə/", "queen": "/kwin/", "quick": "/kwɪk/", "quiz": "/kwɪz/", "rabbit": "/ˈræbɪt/", "red": "/rɛd/", "rain": "/reɪn/", "sun": "/sʌn/", "sock": "/sɑk/", "sand": "/sænd/", "tiger": "/ˈtaɪɡər/", "table": "/ˈteɪbəl/", "ten": "/tɛn/", "umbrella": "/ʌmˈbrɛlə/", "up": "/ʌp/", "under": "/ˈʌndər/", "van": "/væn/", "vase": "/veɪs/", "violin": "/ˌvaɪəˈlɪn/", "watch": "/wɑtʃ/", "water": "/ˈwɔtər/", "wind": "/wɪnd/", "box": "/bɑks/", "fox": "/fɑks/", "six": "/sɪks/", "yellow": "/ˈjɛloʊ/", "yes": "/jɛs/", "yogurt": "/ˈjoʊɡərt/", "zebra": "/ˈzibrə/", "zoo": "/zu/", "zip": "/zɪp/", "map": "/mæp/", "bag": "/bæɡ/", "man": "/mæn/", "cake": "/keɪk/", "name": "/neɪm/", "game": "/ɡeɪm/", "late": "/leɪt/", "make": "/meɪk/", "plate": "/pleɪt/", "men": "/mɛn/", "me": "/mi/", "she": "/ʃi/", "we": "/wi/", "be": "/bi/", "these": "/ðiz/", "Pete": "/pit/", "sit": "/sɪt/", "big": "/bɪɡ/", "ship": "/ʃɪp/", "bike": "/baɪk/", "time": "/taɪm/", "five": "/faɪv/", "like": "/laɪk/", "nine": "/naɪn/", "pot": "/pɑt/", "top": "/tɑp/", "hot": "/hɑt/", "clock": "/klɑk/", "home": "/hoʊm/", "bone": "/boʊn/", "rope": "/roʊp/", "go": "/ɡoʊ/", "stone": "/stoʊn/", "run": "/rʌn/", "cute": "/kjut/", "use": "/juz/ (verb) · /jus/ (noun)", "mule": "/mjul/", "huge": "/hjudʒ/", "tube": "/tub/", "June": "/dʒun/", "see": "/si/", "tree": "/tri/", "sleep": "/slip/", "feet": "/fit/", "sheep": "/ʃip/", "eat": "/it/", "tea": "/ti/", "read": "/rid/ (present) · /rɛd/ (past)", "sea": "/si/", "beach": "/bitʃ/", "leaf": "/lif/", "train": "/treɪn/", "mail": "/meɪl/", "tail": "/teɪl/", "paint": "/peɪnt/", "snail": "/sneɪl/", "day": "/deɪ/", "play": "/pleɪ/", "say": "/seɪ/", "stay": "/steɪ/", "tray": "/treɪ/", "Monday": "/ˈmʌndeɪ/", "boat": "/boʊt/", "coat": "/koʊt/", "road": "/roʊd/", "soap": "/soʊp/", "toast": "/toʊst/", "food": "/fud/", "school": "/skul/", "spoon": "/spun/", "pool": "/pul/", "room": "/rum/", "book": "/bʊk/", "look": "/lʊk/", "foot": "/fʊt/", "good": "/ɡʊd/", "cook": "/kʊk/", "wood": "/wʊd/", "out": "/aʊt/", "cloud": "/klaʊd/", "mouse": "/maʊs/", "mouth": "/maʊθ/", "round": "/raʊnd/", "cow": "/kaʊ/", "down": "/daʊn/", "brown": "/braʊn/", "now": "/naʊ/", "town": "/taʊn/", "flower": "/ˈflaʊər/", "snow": "/snoʊ/", "grow": "/ɡroʊ/", "show": "/ʃoʊ/", "slow": "/sloʊ/", "window": "/ˈwɪndoʊ/", "coin": "/kɔɪn/", "oil": "/ɔɪl/", "boil": "/bɔɪl/", "boy": "/bɔɪ/", "toy": "/tɔɪ/", "enjoy": "/ɪnˈdʒɔɪ/", "saw": "/sɔ/", "paw": "/pɔ/", "draw": "/drɔ/", "August": "/ˈɔɡəst/", "cause": "/kɔz/", "sauce": "/sɔs/", "star": "/stɑr/", "farm": "/fɑrm/", "park": "/pɑrk/", "shark": "/ʃɑrk/", "garden": "/ˈɡɑrdən/", "corn": "/kɔrn/", "fork": "/fɔrk/", "north": "/nɔrθ/", "storm": "/stɔrm/", "short": "/ʃɔrt/", "her": "/hɜr/", "bird": "/bɜrd/", "turn": "/tɜrn/", "nurse": "/nɜrs/", "girl": "/ɡɜrl/", "burger": "/ˈbɜrɡər/", "shop": "/ʃɑp/", "shoe": "/ʃu/", "wash": "/wɑʃ/", "chair": "/tʃɛr/", "cheese": "/tʃiz/", "chicken": "/ˈtʃɪkɪn/", "lunch": "/lʌntʃ/", "children": "/ˈtʃɪldrən/", "think": "/θɪŋk/", "three": "/θri/", "thank": "/θæŋk/", "bath": "/bæθ/", "thumb": "/θʌm/", "this": "/ðɪs/", "that": "/ðæt/", "the": "/ðə/ · /ði/", "mother": "/ˈmʌðər/", "brother": "/ˈbrʌðər/", "with": "/wɪð/", "what": "/wʌt/", "when": "/wɛn/", "where": "/wɛr/", "white": "/waɪt/", "whale": "/weɪl/", "wheel": "/wil/", "phone": "/foʊn/", "photo": "/ˈfoʊtoʊ/", "dolphin": "/ˈdɑlfɪn/", "alphabet": "/ˈælfəˌbɛt/", "graph": "/ɡræf/", "black": "/blæk/", "back": "/bæk/", "truck": "/trʌk/", "sing": "/sɪŋ/", "ring": "/rɪŋ/", "long": "/lɔŋ/", "song": "/sɔŋ/", "morning": "/ˈmɔrnɪŋ/", "quiet": "/ˈkwaɪət/", "question": "/ˈkwɛstʃən/", "square": "/skwɛr/", "knee": "/ni/", "knife": "/naɪf/", "know": "/noʊ/", "knock": "/nɑk/", "knot": "/nɑt/", "knight": "/naɪt/", "write": "/raɪt/", "wrong": "/rɔŋ/", "wrap": "/ræp/", "wrist": "/rɪst/", "wrinkle": "/ˈrɪŋkəl/", "wrote": "/roʊt/", "night": "/naɪt/", "light": "/laɪt/", "high": "/haɪ/", "right": "/raɪt/", "bright": "/braɪt/", "eight": "/eɪt/", "laugh": "/læf/", "enough": "/ɪˈnʌf/", "cough": "/kɔf/", "rough": "/rʌf/", "tough": "/tʌf/", "laughter": "/ˈlæftər/", "nation": "/ˈneɪʃən/", "station": "/ˈsteɪʃən/", "action": "/ˈækʃən/", "education": "/ˌɛdʒəˈkeɪʃən/", "information": "/ˌɪnfərˈmeɪʃən/", "vacation": "/veɪˈkeɪʃən/", "vision": "/ˈvɪʒən/", "television": "/ˈtɛləˌvɪʒən/", "decision": "/dɪˈsɪʒən/", "division": "/dɪˈvɪʒən/", "conclusion": "/kənˈkluʒən/", "confusion": "/kənˈfjuʒən/", "mission": "/ˈmɪʃən/", "session": "/ˈsɛʃən/", "discussion": "/dɪˈskʌʃən/", "permission": "/pərˈmɪʃən/", "tension": "/ˈtɛnʃən/", "expression": "/ɪkˈsprɛʃən/", "picture": "/ˈpɪktʃər/", "nature": "/ˈneɪtʃər/", "future": "/ˈfjutʃər/", "adventure": "/ədˈvɛntʃər/", "creature": "/ˈkritʃər/", "culture": "/ˈkʌltʃər/", "sugar": "/ˈʃʊɡər/", "sure": "/ʃʊr/", "ensure": "/ɪnˈʃʊr/", "insurance": "/ɪnˈʃʊrəns/", "assure": "/əˈʃʊr/", "usual": "/ˈjuʒuəl/", "usually": "/ˈjuʒuəli/", "measure": "/ˈmɛʒər/", "treasure": "/ˈtrɛʒər/", "pleasure": "/ˈplɛʒər/", "leisure": "/ˈliʒər/", "Dhaka": "/ˈdɑkə/", "dhal": "/dɑl/", "dhow": "/daʊ/", "Abu Dhabi": "/ˌɑbu ˈdɑbi/", "khaki": "/ˈkæki/", "Khan": "/kɑn/", "Khartoum": "/kɑrˈtum/", "Khaled": "/ˈkɑlɛd/", "schedule": "/ˈskɛdʒul/", "appointment": "/əˈpɔɪntmənt/", "borrow": "/ˈbɑroʊ/", "lend": "/lɛnd/", "neighbor": "/ˈneɪbər/", "traffic": "/ˈtræfɪk/", "repair": "/rɪˈpɛr/", "remember": "/rɪˈmɛmbər/", "meeting": "/ˈmitɪŋ/", "deadline": "/ˈdɛdˌlaɪn/", "report": "/rɪˈpɔrt/", "customer": "/ˈkʌstəmər/", "manager": "/ˈmænɪdʒər/", "salary": "/ˈsæləri/", "experience": "/ɪkˈspɪriəns/", "available": "/əˈveɪləbəl/", "actually": "/ˈæktʃuəli/", "maybe": "/ˈmeɪbi/", "probably": "/ˈprɑbəbli/", "explain": "/ɪkˈspleɪn/", "repeat": "/rɪˈpit/", "agree": "/əˈɡri/", "suggest": "/səɡˈdʒɛst/", "appreciate": "/əˈpriʃiˌeɪt/", "price": "/praɪs/", "discount": "/ˈdɪskaʊnt/", "cheap": "/tʃip/", "expensive": "/ɪkˈspɛnsɪv/", "receipt": "/rɪˈsit/", "refund": "/ˈriˌfʌnd/", "change": "/tʃeɪndʒ/", "cash": "/kæʃ/", "ticket": "/ˈtɪkɪt/", "passport": "/ˈpæsˌpɔrt/", "luggage": "/ˈlʌɡɪdʒ/", "reservation": "/ˌrɛzərˈveɪʃən/", "order": "/ˈɔrdər/", "bill": "/bɪl/", "delicious": "/dɪˈlɪʃəs/", "address": "/əˈdrɛs/ · /ˈæˌdrɛs/", "headache": "/ˈhɛdˌeɪk/", "fever": "/ˈfivər/", "medicine": "/ˈmɛdɪsɪn/", "pharmacy": "/ˈfɑrməsi/", "pain": "/peɪn/", "allergic": "/əˈlɜrdʒɪk/", "rest": "/rɛst/", "emergency": "/ɪˈmɜrdʒənsi/", "tired": "/ˈtaɪərd/", "worried": "/ˈwɜrid/", "excited": "/ɪkˈsaɪtɪd/", "proud": "/praʊd/", "nervous": "/ˈnɜrvəs/", "bored": "/bɔrd/", "angry": "/ˈæŋɡri/", "relaxed": "/rɪˈlækst/", "password": "/ˈpæsˌwɜrd/", "download": "/ˈdaʊnˌloʊd/", "battery": "/ˈbætəri/", "charge": "/tʃɑrdʒ/", "signal": "/ˈsɪɡnəl/", "message": "/ˈmɛsɪdʒ/", "update": "/ʌpˈdeɪt/", "screenshot": "/ˈskrinˌʃɑt/"};
+const HOMO_GROUPS=[["write", "right", "rite"], ["see", "sea"], ["eight", "ate"], ["know", "no"], ["knight", "night"], ["wood", "would"], ["tail", "tale"], ["mail", "male"], ["sun", "son"], ["be", "bee"], ["whale", "wail"], ["knot", "not"], ["wrap", "rap"], ["wrote", "rote"], ["feet", "feat"], ["road", "rode", "rowed"], ["bored", "board"], ["pain", "pane"], ["rain", "reign", "rein"], ["tea", "tee"], ["flower", "flour"], ["where", "wear"], ["ring", "wring"], ["cent", "scent", "sent"]];
+const ICON_SPK='<svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.5 4.5 0 0 0 16.5 12zM14 3.23v2.06a7 7 0 0 1 0 13.42v2.06a9 9 0 0 0 0-17.54z"/></svg>';
+const ICON_MIC='<svg viewBox="0 0 24 24"><path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3zm5-3a5 5 0 0 1-10 0H5a7 7 0 0 0 6 6.92V21h2v-3.08A7 7 0 0 0 19 11h-2z"/></svg>';
+const el=(t,c,h)=>{const e=document.createElement(t); if(c) e.className=c; if(h!==undefined) e.innerHTML=h; return e;};
+function hl(text,pat,g){
+  if(!pat) return text;
+  return text.replace(new RegExp("("+pat+")",g?"gi":"i"),'<span class="hl">$1</span>');
+}
+function ib(cls,icon,label,fn){
+  const b=el("button","ib "+cls,icon); b.type="button"; b.title=label; b.setAttribute("aria-label",label); b.onclick=fn; return b;
+}
+function chip(word,pat,emoji){
+  const c=el("div","chip");
+  if(emoji) c.appendChild(el("div","emo",emoji));
+  const out=el("div","res");
+  const wl=el("div","wline");
+  wl.appendChild(ib("mic sm",ICON_MIC,"Say "+word,function(){mic(word,out,this);}));
+  wl.appendChild(el("div","w",hl(word,pat)));
+  c.appendChild(wl);
+  if(IPA_WORDS[word]) c.appendChild(el("div","ph",IPA_WORDS[word]));
+  if(AR_WORDS[word]) c.appendChild(el("div","ar am",AR_WORDS[word]));
+  const row=el("div","row");
+  row.appendChild(ib("spk sm",ICON_SPK,"Listen to "+word,()=>speak(word,0.8)));
+  c.appendChild(row); c.appendChild(out);
+  return c;
+}
+function chips(words,pat,firstEmoji){
+  const g=el("div","chips");
+  words.forEach((w,i)=>g.appendChild(chip(w,pat,i===0?firstEmoji:"")));
+  return g;
+}
+function sentence(text,pat){
+  const s=el("div","sent");
+  s.appendChild(el("div","st",hl(text,pat,true)));
+  const out=el("div","res");
+  const row=el("div","row");
+  row.appendChild(ib("mic",ICON_MIC,"Read the sentence",function(){mic(text,out,this);}));
+  row.appendChild(ib("spk",ICON_SPK,"Listen to the sentence",()=>speak(text,0.85)));
+  const slow=el("button","tb",'🐢 Slow'); slow.type="button"; slow.onclick=()=>speak(text,0.55);
+  row.appendChild(slow);
+  s.appendChild(row); s.appendChild(out);
+  return s;
+}
+function group(g,orange){
+  const c=el("div","card"+(orange?" o":""));
+  const top=el("div","card-top");
+  top.appendChild(el("div","big",g.sym));
+  const meta=el("div","meta");
+  meta.appendChild(el("div","nm",g.title));
+  if(g.ipa) meta.appendChild(el("span","ipa",g.ipa));
+  top.appendChild(meta);
+  if(g.say){
+    top.appendChild(ib("spk",ICON_SPK,"Listen to the sound",()=>speak(g.say,0.6)));
+  }
+  c.appendChild(top);
+  if(g.tip) c.appendChild(el("p","tip",g.tip));
+  c.appendChild(chips(g.words,g.pat,g.emoji||""));
+  if(g.sentence) c.appendChild(sentence(g.sentence,g.pat));
+  return c;
+}
+
+/* ======================= 1. ALPHABET ======================= */
+/* [Letter, name-say, sound-say, IPA, emoji, [3 words], sentence] */
+const LET=[
+["A","ay","aah","/æ/","🍎",["apple","ant","add"],"An ant ate an apple."],
+["B","bee","buh","/b/","⚽",["ball","bed","bus"],"Ben has a big blue ball."],
+["C","see","kuh","/k/ or /s/","🐱",["cat","cup","car"],"The cat sat in the car."],
+["D","dee","duh","/d/","🐶",["dog","duck","door"],"The dog digs by the door."],
+["E","ee","eh","/ɛ/","🥚",["egg","elephant","end"],"The elephant has an egg."],
+["F","eff","fff","/f/","🐟",["fish","fan","frog"],"The frog sees a fish."],
+["G","gee","guh","/g/","🐐",["goat","gift","green"],"The goat eats green grass."],
+["H","aitch","huh","/h/","🎩",["hat","house","horse"],"The horse has a hat."],
+["I","eye","ih","/ɪ/","🐛",["insect","ink","itch"],"An insect is on the ink."],
+["J","jay","juh","/dʒ/","🧃",["juice","jump","jelly"],"Jack drinks juice and jumps."],
+["K","kay","kuh","/k/","🪁",["kite","king","key"],"The king has a key and a kite."],
+["L","el","lll","/l/","🦁",["lion","lamp","leg"],"The lion is on the log."],
+["M","em","mmm","/m/","🌙",["moon","milk","monkey"],"My monkey drinks milk."],
+["N","en","nnn","/n/","🪺",["nest","nose","net"],"The nest is next to the net."],
+["O","oh","ah","/ɒ/","🍊",["orange","octopus","olive"],"The octopus has an orange."],
+["P","pee","puh","/p/","🖊️",["pen","pig","pizza"],"Pam puts a pen in the pot."],
+["Q","cue","kwuh","/kw/","👑",["queen","quick","quiz"],"The queen has a quick quiz."],
+["R","are","rrr","/r/","🐰",["rabbit","red","rain"],"The red rabbit runs in the rain."],
+["S","ess","sss","/s/","☀️",["sun","sock","sand"],"The sun is hot on the sand."],
+["T","tee","tuh","/t/","🐯",["tiger","table","ten"],"The tiger sits on the table."],
+["U","you","uh","/ʌ/","☂️",["umbrella","up","under"],"My umbrella is up."],
+["V","vee","vvv","/v/","🚐",["van","vase","violin"],"The van is very big."],
+["W","double you","wuh","/w/","⌚",["watch","water","wind"],"We watch the water."],
+["X","ex","ks","/ks/","📦",["box","fox","six"],"The fox is in the box."],
+["Y","why","yuh","/j/","💛",["yellow","yes","yogurt"],"Yes, the yogurt is yellow."],
+["Z","zee","zzz","/z/","🦓",["zebra","zoo","zip"],"The zebra is at the zoo."]
+];
+(function(){
+  const az=document.getElementById("az"), box=document.getElementById("letters");
+  LET.forEach((d,i)=>{
+    const [L,nameSay,soundSay,ipa,emoji,words,sent]=d;
+    const a=el("a",null,L); a.href="#L-"+L; az.appendChild(a);
+    const c=el("div","card"+(i%2?" o":"")); c.id="L-"+L;
+    const top=el("div","card-top");
+    top.appendChild(el("div","big",L+'<small>'+L.toLowerCase()+'</small>'));
+    const meta=el("div","meta");
+    meta.appendChild(el("div","nm","Letter "+L));
+    meta.appendChild(el("span","ipa",ipa));
+    const row=el("div","row"); row.style.cssText="justify-content:flex-start;margin-top:8px;flex-wrap:wrap";
+    const n=el("button","tb",ICON_SPK+" Name"); n.type="button"; n.onclick=()=>speak(nameSay,0.7);
+    const s=el("button","tb o",ICON_SPK+" Sound"); s.type="button"; s.onclick=()=>speak(soundSay,0.6);
+    row.appendChild(n); row.appendChild(s); meta.appendChild(row);
+    top.appendChild(meta); c.appendChild(top);
+    c.appendChild(chips(words,L.toLowerCase(),emoji));
+    c.appendChild(sentence(sent,null));
+    box.appendChild(c);
+  });
+})();
+
+/* ======================= 2. VOWELS ======================= */
+const VOW=[
+ {v:"A",
+  s:{ipa:"/æ/",say:"aah",words:["cat","hat","map","bag","man","apple"],sent:"The fat cat sat on a map."},
+  l:{ipa:"/eɪ/",say:"ay",words:["cake","name","game","late","make","plate"],sent:"Jake ate a cake at the lake."}},
+ {v:"E",
+  s:{ipa:"/ɛ/",say:"eh",words:["bed","pen","red","ten","egg","men"],sent:"Ben has ten red pens."},
+  l:{ipa:"/iː/",say:"ee",words:["me","she","we","be","these","Pete"],sent:"She and I will be here."}},
+ {v:"I",
+  s:{ipa:"/ɪ/",say:"ih",words:["sit","pig","big","fish","milk","ship"],sent:"The pig sits in the big pit."},
+  l:{ipa:"/aɪ/",say:"eye",words:["bike","time","five","kite","like","nine"],sent:"Mike rides his bike at nine."}},
+ {v:"O",
+  s:{ipa:"/ɒ/ (US /ɑ/)",say:"ah",words:["dog","pot","box","top","hot","clock"],sent:"The dog sat on the hot pot."},
+  l:{ipa:"/oʊ/",say:"oh",words:["home","nose","bone","rope","go","stone"],sent:"I hope Joe goes home alone."}},
+ {v:"U",
+  s:{ipa:"/ʌ/",say:"uh",words:["cup","bus","sun","duck","run","up"],sent:"The bug is on the cup."},
+  l:{ipa:"/juː/",say:"you",words:["cute","use","mule","huge","tube","June"],sent:"June uses a cute tube."}}
+];
+(function(){
+  const box=document.getElementById("vowelBox");
+  VOW.forEach((d,i)=>{
+    const c=el("div","card vwrap"+(i%2?" o":"")); c.id="V-"+d.v;
+    const top=el("div","card-top");
+    top.appendChild(el("div","big",d.v+'<small>'+d.v.toLowerCase()+'</small>'));
+    top.appendChild(el("div","meta",'<div class="nm">Vowel '+d.v+'</div><span class="ipa">short '+d.s.ipa+'</span> <span class="ipa">long '+d.l.ipa+'</span>'));
+    c.appendChild(top);
+    const g=el("div","vgrid");
+    [["s","Short sound "+d.s.ipa,"short"],["l","Long sound "+d.l.ipa,"long"]].forEach(k=>{
+      const x=d[k[0]];
+      const p=el("div","panel "+k[2]);
+      const h=el("h4",null,k[1]+" "); 
+      h.appendChild(ib("spk",ICON_SPK,"Listen to the "+k[2]+" sound",()=>speak(x.say,0.6)));
+      p.appendChild(h);
+      p.appendChild(chips(x.words,d.v.toLowerCase(),""));
+      p.appendChild(sentence(x.sent,null));
+      g.appendChild(p);
+    });
+    c.appendChild(g); box.appendChild(c);
+  });
+})();
+
+/* ======================= 3-6. GROUPS ======================= */
+const TEAMS=[
+ {sym:"ee",title:"ee → long e",ipa:"/iː/",say:"ee",pat:"ee",words:["see","tree","green","sleep","feet","sheep"],sentence:"I see a green tree."},
+ {sym:"ea",title:"ea → long e",ipa:"/iː/",say:"ee",pat:"ea",words:["eat","tea","read","sea","beach","leaf"],sentence:"We eat peas at the beach."},
+ {sym:"ai",title:"ai → long a",ipa:"/eɪ/",say:"ay",pat:"ai",words:["rain","train","mail","tail","paint","snail"],sentence:"The train is late in the rain."},
+ {sym:"ay",title:"ay → long a",ipa:"/eɪ/",say:"ay",pat:"ay",words:["day","play","say","stay","tray","Monday"],sentence:"We play all day on Monday."},
+ {sym:"oa",title:"oa → long o",ipa:"/oʊ/",say:"oh",pat:"oa",words:["boat","coat","road","soap","goat","toast"],sentence:"The goat is on the boat."},
+ {sym:"oo",title:"oo (long)",ipa:"/uː/",say:"oo",pat:"oo",words:["moon","food","school","spoon","pool","room"],sentence:"The moon is over the school pool."},
+ {sym:"oo",title:"oo (short)",ipa:"/ʊ/",say:"uh",pat:"oo",words:["book","look","foot","good","cook","wood"],sentence:"Look at the good book."},
+ {sym:"ou",title:"ou → ow sound",ipa:"/aʊ/",say:"ow",pat:"ou",words:["out","house","cloud","mouse","mouth","round"],sentence:"The mouse is out of the house."},
+ {sym:"ow",title:"ow → ow sound",ipa:"/aʊ/",say:"ow",pat:"ow",words:["cow","down","brown","now","town","flower"],sentence:"The brown cow is in town."},
+ {sym:"ow",title:"ow → long o",ipa:"/oʊ/",say:"oh",pat:"ow",words:["snow","grow","yellow","show","slow","window"],sentence:"The snow is slow to go."},
+ {sym:"oi/oy",title:"oi, oy",ipa:"/ɔɪ/",say:"oy",pat:"oi|oy",words:["coin","oil","boil","boy","toy","enjoy"],sentence:"The boy enjoys his toy."},
+ {sym:"au/aw",title:"au, aw",ipa:"/ɔː/",say:"aw",pat:"au|aw",words:["saw","paw","draw","August","cause","sauce"],sentence:"I saw a paw in the sauce."},
+ {sym:"ar",title:"ar",ipa:"/ɑːr/",say:"ar",pat:"ar",words:["car","star","farm","park","shark","garden"],sentence:"The car is far from the farm."},
+ {sym:"or",title:"or",ipa:"/ɔːr/",say:"or",pat:"or",words:["corn","fork","horse","north","storm","short"],sentence:"The horse eats corn in the storm."},
+ {sym:"er/ir/ur",title:"er, ir, ur",ipa:"/ɜːr/",say:"er",pat:"er|ir|ur",words:["her","bird","turn","nurse","girl","burger"],sentence:"The girl and her nurse turn to the bird."}
+];
+const CONS=[
+ {sym:"sh",title:"sh",ipa:"/ʃ/",say:"shh",pat:"sh",tip:"Round your lips and blow air. Like asking for silence: “shhh”.",words:["ship","shop","fish","shoe","wash","sheep"],emoji:"🚢",sentence:"She shut the shop and washed the fish."},
+ {sym:"ch",title:"ch",ipa:"/tʃ/",say:"chuh",pat:"ch",tip:"Start with t, finish with sh. Like a train: “choo-choo”.",words:["chair","cheese","chicken","lunch","watch","children"],emoji:"🧀",sentence:"The children eat cheese and chicken for lunch."},
+ {sym:"th",title:"th (voiceless)",ipa:"/θ/",say:"thhh",pat:"th",tip:"Put your tongue between your teeth and blow. No voice.",words:["think","three","thank","bath","mouth","thumb"],emoji:"👍",sentence:"Thank you for the three thick books."},
+ {sym:"th",title:"th (voiced)",ipa:"/ð/",say:"thuh",pat:"th",tip:"Same tongue position, but use your voice (feel the buzz). This is the sound of the, this, that.",words:["this","that","the","mother","brother","with"],emoji:"",sentence:"This is my mother and that is my brother."},
+ {sym:"wh",title:"wh",ipa:"/w/",say:"wuh",pat:"wh",tip:"Most speakers say it like w. Question words start with wh.",words:["what","when","where","white","whale","wheel"],emoji:"🐋",sentence:"What is that white wheel?"},
+ {sym:"ph",title:"ph",ipa:"/f/",say:"fff",pat:"ph",tip:"ph says f. Many words come from Greek.",words:["phone","photo","elephant","dolphin","alphabet","graph"],emoji:"📱",sentence:"The elephant took a photo with a phone."},
+ {sym:"ck",title:"ck",ipa:"/k/",say:"kuh",pat:"ck",tip:"ck says k and comes after a short vowel at the end of a word.",words:["duck","clock","black","sock","back","truck"],emoji:"🦆",sentence:"The black duck sits on the truck."},
+ {sym:"ng",title:"ng",ipa:"/ŋ/",say:"ng",pat:"ng",tip:"The sound comes from the back of your throat. Do not say a hard g.",words:["sing","ring","king","long","song","morning"],emoji:"💍",sentence:"The king sings a long song."},
+ {sym:"qu",title:"qu",ipa:"/kw/",say:"kwuh",pat:"qu",tip:"q is always followed by u. Together they say kw.",words:["queen","quick","quiet","quiz","question","square"],emoji:"👑",sentence:"The queen asks a quick question."},
+ {sym:"kn",title:"kn",ipa:"/n/",say:"nnn",pat:"kn",tip:"The k is silent at the start of a word.",words:["knee","knife","know","knock","knot","knight"],emoji:"🦵",sentence:"Knock, knock! I know the knight."},
+ {sym:"wr",title:"wr",ipa:"/r/",say:"rrr",pat:"wr",tip:"The w is silent at the start of a word.",words:["write","wrong","wrap","wrist","wrinkle","wrote"],emoji:"✍️",sentence:"I wrote the wrong word on my wrist."},
+ {sym:"gh",title:"gh (silent)",ipa:"/ /",say:"",pat:"gh",tip:"In -ight words, gh is silent: night = “nite”.",words:["night","light","high","right","bright","eight"],emoji:"🌙",sentence:"The light is bright at night."},
+ {sym:"gh",title:"gh (= f)",ipa:"/f/",say:"fff",pat:"gh",tip:"Sometimes gh says f at the end of a word.",words:["laugh","enough","cough","rough","tough","laughter"],emoji:"😂",sentence:"We laugh when we have enough fun."}
+];
+const ENDS=[
+ {sym:"tion",title:"-tion",ipa:"/ʃən/",say:"shun",pat:"tion",tip:"-tion says “shun”. The stress comes just before it: na-TION.",words:["nation","station","action","education","information","vacation"],emoji:"🚉",sentence:"The station gives information about the vacation."},
+ {sym:"sion",title:"-sion (after a vowel)",ipa:"/ʒən/",say:"zhun",pat:"sion",tip:"After a vowel, -sion says “zhun”, like the s in vision.",words:["vision","television","decision","division","conclusion","confusion"],emoji:"📺",sentence:"I made a decision about the television."},
+ {sym:"ssion",title:"-ssion / -sion (after a consonant)",ipa:"/ʃən/",say:"shun",pat:"ssion|sion",tip:"After s or a consonant, it says “shun” again.",words:["mission","session","discussion","permission","tension","expression"],emoji:"🚀",sentence:"We need permission for the mission."},
+ {sym:"ture",title:"-ture",ipa:"/tʃər/",say:"cher",pat:"ture",tip:"-ture says “cher”.",words:["picture","nature","future","adventure","creature","culture"],emoji:"🖼️",sentence:"The picture shows a creature in nature."},
+ {sym:"su",title:"su → sh",ipa:"/ʃ/",say:"shh",pat:"su",tip:"In a few words, su says sh.",words:["sugar","sure","ensure","insurance","assure"],emoji:"🍬",sentence:"I am sure the sugar is sweet."},
+ {sym:"su/sur",title:"su, sur → zh",ipa:"/ʒ/",say:"zhh",pat:"su|sur",tip:"In these words, the s says zh, like the middle of vision.",words:["usual","usually","measure","treasure","pleasure","leisure"],emoji:"💎",sentence:"It is a pleasure to find the treasure."}
+];
+const SPEC=[
+ {sym:"dh",title:"dh (names and borrowed words)",ipa:"/d/ or /ð/",say:"",pat:"dh",tip:"Not an English spelling. In names like Dhaka the h only softens the d. The English “th” sound in this/that is spelled th, not dh.",words:["Dhaka","dhal","dhow","Abu Dhabi"],emoji:"🌍",sentence:null},
+ {sym:"kh",title:"kh (names and borrowed words)",ipa:"/k/ or /x/",say:"",pat:"kh",tip:"Not an English spelling. It comes from other languages. English speakers often say it like a plain k.",words:["khaki","Khan","Khartoum","Khaled"],emoji:"🌍",sentence:null}
+];
+function fill(id,arr){
+  const box=document.getElementById(id);
+  arr.forEach((g,i)=>box.appendChild(group(g,i%2===1)));
+}
+fill("teamBox",TEAMS); fill("consBox",CONS); fill("endBox",ENDS); fill("spBox",SPEC);
+
+/* ======================= 7. PRACTICE ======================= */
+const PRACTICE=[
+ ["Short and long vowels",["The cat sat on the mat.","Kate ate a cake at eight.","The pig has a big bike.","The home has a stone nose."]],
+ ["sh / ch / th",["She sells fresh fish at the shop.","The children chop cheese for lunch.","Three thin thieves thank their mother."]],
+ ["wh / ph / ck",["What white whale is that?","The elephant has a phone.","The black duck is on the clock."]],
+ ["-tion / -sion / -ture",["The nation has a big celebration.","The television shows a nice picture.","Her decision is about the future."]],
+ ["Everyday sentences",["Hello, my name is Sara. Nice to meet you.","I go to school every morning.","Can you help me with my homework, please?"]]
+];
+(function(){
+  const box=document.getElementById("practiceBox");
+  PRACTICE.forEach((p,i)=>{
+    const c=el("div","card vwrap"+(i%2?" o":""));
+    c.appendChild(el("h3",null,p[0]));
+    p[1].forEach(s=>c.appendChild(sentence(s,null)));
+    box.appendChild(c);
+  });
+})();
+
+function toggleAr(){
+  const h=document.body.classList.toggle("hide-ar");
+  document.querySelectorAll(".artog").forEach(b=>{b.textContent=h?"🇪🇬 إظهار العربي":"🇪🇬 إخفاء العربي";});
+}
+/* ======================= 8. USEFUL WORDS ======================= */
+/* [word, Arabic meaning, example sentence, Arabic translation] */
+const VOC=[
+{id:"daily",ic:"🏠",en:"Daily Life",ar:"الحياة اليومية",w:[
+["schedule","جدول مواعيد","Let me check my schedule.","خليني أراجع جدول مواعيدي."],
+["appointment","موعد","I have an appointment at five.","عندي موعد الساعة خمسة."],
+["borrow","يستلف","Can I borrow your charger?","ينفع أستلف الشاحن بتاعك؟"],
+["lend","يسلّف / يُعير","Could you lend me a pen?","تقدر تسلفني قلم؟"],
+["neighbor","جار","My neighbor is very friendly.","جاري ودود جدًا."],
+["traffic","زحمة المرور","I was late because of the traffic.","اتأخرت بسبب زحمة المرور."],
+["repair","يصلّح","I need to repair my phone.","محتاج أصلّح موبايلي."],
+["remember","يفتكر","I can't remember his name.","مش قادر أفتكر اسمه."]]},
+{id:"work",ic:"💼",en:"Work",ar:"الشغل",w:[
+["meeting","اجتماع","The meeting starts at ten.","الاجتماع بيبدأ الساعة عشرة."],
+["deadline","آخر موعد للتسليم","The deadline is on Friday.","آخر موعد للتسليم يوم الجمعة."],
+["report","تقرير","I will send you the report today.","هبعتلك التقرير النهارده."],
+["customer","عميل / زبون","The customer is waiting outside.","العميل مستني بره."],
+["manager","مدير","My manager is very helpful.","مديري متعاون جدًا."],
+["salary","مرتب","The salary is paid every month.","المرتب بيتدفع كل شهر."],
+["experience","خبرة","I have three years of experience.","عندي تلات سنين خبرة."],
+["available","متاح / فاضي","Are you available tomorrow?","هل إنت فاضي بكرة؟"]]},
+{id:"talk",ic:"💬",en:"Conversation",ar:"المحادثة",w:[
+["actually","في الحقيقة","Actually, I prefer tea.","في الحقيقة أنا بفضّل الشاي."],
+["maybe","يمكن","Maybe we can meet tomorrow.","يمكن نتقابل بكرة."],
+["probably","غالبًا","I will probably be late.","غالبًا هتأخر."],
+["explain","يشرح","Can you explain this word?","تقدر تشرحلي الكلمة دي؟"],
+["repeat","يعيد / يكرر","Could you repeat that, please?","ممكن تعيد ده لو سمحت؟"],
+["agree","يوافق","I agree with you.","أنا موافقك."],
+["suggest","يقترح","I suggest we start now.","أقترح إننا نبدأ دلوقتي."],
+["appreciate","يقدّر / يشكر","I really appreciate your help.","أنا فعلًا بقدّر مساعدتك."]]},
+{id:"shop",ic:"🛍️",en:"Shopping & Money",ar:"التسوق والفلوس",w:[
+["price","سعر","What is the price of this shirt?","إيه سعر القميص ده؟"],
+["discount","خصم","Is there a discount today?","فيه خصم النهارده؟"],
+["cheap","رخيص","This restaurant is cheap.","المطعم ده رخيص."],
+["expensive","غالي","The laptop is too expensive.","اللابتوب غالي أوي."],
+["receipt","إيصال","Please keep the receipt.","من فضلك احتفظ بالإيصال."],
+["refund","استرداد المبلغ","I want a refund, please.","عايز أسترد فلوسي لو سمحت."],
+["change","الباقي / فكّة","Keep the change.","خلّي الباقي معاك."],
+["cash","كاش / نقدًا","Do you accept cash?","بتقبلوا كاش؟"]]},
+{id:"travel",ic:"✈️",en:"Travel & Food",ar:"السفر والأكل",w:[
+["ticket","تذكرة","I bought two tickets.","اشتريت تذكرتين."],
+["passport","جواز السفر","Don't forget your passport.","متنساش جواز سفرك."],
+["luggage","شنط السفر","My luggage is heavy.","شنطة سفري تقيلة."],
+["reservation","حجز","I have a reservation for two.","عندي حجز لشخصين."],
+["order","يطلب","I would like to order now.","عايز أطلب دلوقتي."],
+["bill","الحساب / الفاتورة","Can we have the bill, please?","ممكن الحساب لو سمحت؟"],
+["delicious","لذيذ","The food is delicious.","الأكل لذيذ."],
+["address","عنوان","What is your address?","إيه عنوانك؟"]]},
+{id:"health",ic:"🩺",en:"Health",ar:"الصحة",w:[
+["headache","صداع","I have a headache.","عندي صداع."],
+["fever","حمّى / سخونية","He has a fever.","هو عنده سخونية."],
+["medicine","دواء","Take this medicine twice a day.","خد الدوا ده مرتين في اليوم."],
+["pharmacy","صيدلية","The pharmacy is open now.","الصيدلية مفتوحة دلوقتي."],
+["pain","ألم","I feel pain in my back.","حاسس بألم في ضهري."],
+["allergic","عنده حساسية","I am allergic to nuts.","عندي حساسية من المكسرات."],
+["rest","راحة / يرتاح","You need to rest today.","محتاج ترتاح النهارده."],
+["emergency","طوارئ","Call the doctor in an emergency.","اتصل بالدكتور في حالة الطوارئ."]]},
+{id:"feel",ic:"😊",en:"Feelings",ar:"المشاعر",w:[
+["tired","تعبان","I am tired after work.","أنا تعبان بعد الشغل."],
+["worried","قلقان","She is worried about the exam.","هي قلقانة من الامتحان."],
+["excited","متحمس","We are excited about the trip.","إحنا متحمسين للرحلة."],
+["proud","فخور","I am proud of you.","أنا فخور بيك."],
+["nervous","متوتر","I feel nervous before interviews.","بتوتر قبل المقابلات."],
+["bored","زهقان","I am bored at home.","أنا زهقان في البيت."],
+["angry","غضبان","He is angry about the delay.","هو غضبان بسبب التأخير."],
+["relaxed","مرتاح / هادي","I feel relaxed on weekends.","بحس إني مرتاح في الإجازة."]]},
+{id:"tech",ic:"📱",en:"Phone & Internet",ar:"الموبايل والإنترنت",w:[
+["password","كلمة السر","I forgot my password.","نسيت كلمة السر."],
+["download","يحمّل","Download the app first.","حمّل التطبيق الأول."],
+["battery","بطارية","My battery is low.","البطارية عندي ضعيفة."],
+["charge","يشحن","I need to charge my phone.","محتاج أشحن موبايلي."],
+["signal","إشارة / شبكة","There is no signal here.","مفيش شبكة هنا."],
+["message","رسالة","I will send you a message.","هبعتلك رسالة."],
+["update","تحديث / يحدّث","Please update the app.","من فضلك حدّث التطبيق."],
+["screenshot","لقطة شاشة","Send me a screenshot.","ابعتلي لقطة شاشة."]]}
+];
+(function(){
+  const ctl=document.getElementById("vocCtl"), box=document.getElementById("vocBox");
+  const cards=[];
+  function setFilter(id,btn){
+    cards.forEach(c=>{c.el.style.display=(id==="all"||c.id===id)?"":"none";});
+    ctl.querySelectorAll(".fb[data-f]").forEach(b=>b.classList.toggle("on",b===btn));
+  }
+  const all=el("button","fb on","All · الكل"); all.type="button"; all.dataset.f="all";
+  all.onclick=()=>setFilter("all",all); ctl.appendChild(all);
+  VOC.forEach((cat,i)=>{
+    const fb=el("button","fb",cat.ic+" "+cat.en); fb.type="button"; fb.dataset.f=cat.id;
+    fb.onclick=()=>setFilter(cat.id,fb); ctl.appendChild(fb);
+    const c=el("div","card vwrap"+(i%2?" o":"")); c.id="W-"+cat.id;
+    c.appendChild(el("h3","vh",cat.ic+" "+cat.en+' <span class="ar">— '+cat.ar+'</span>'));
+    const g=el("div","wgrid");
+    cat.w.forEach(w=>{
+      const en=w[0], wc=el("div","wcard"), top=el("div","wtop"), info=el("div","winfo"), out=el("div","res");
+      info.appendChild(el("div","ww",en));
+      if(IPA_WORDS[en]) info.appendChild(el("div","ph",IPA_WORDS[en]));
+      info.appendChild(el("div","ar wm",w[1]));
+      top.appendChild(ib("mic",ICON_MIC,"Say "+en,function(){mic(en,out,this);}));
+      top.appendChild(info);
+      top.appendChild(ib("spk",ICON_SPK,"Listen to "+en,()=>speak(en,0.8)));
+      wc.appendChild(top); wc.appendChild(out);
+      const s=sentence(w[2],en);
+      s.querySelector(".st").after(el("div","ar wa",w[3]));
+      wc.appendChild(s);
+      g.appendChild(wc);
+    });
+    c.appendChild(g); box.appendChild(c); cards.push({id:cat.id,el:c});
+  });
+  const t=el("button","fb artog","🇪🇬 إخفاء العربي"); t.type="button";
+  t.onclick=toggleAr;
+  ctl.appendChild(t);
+})();
+
+/* ======================= STATUS BANNERS ======================= */
+(function(){
+  const t=document.getElementById("bnTTS"), m=document.getElementById("bnMic");
+  if(!synth){
+    t.textContent="⚠️ This browser cannot read aloud. Please open the book in Chrome, Edge or Safari.";
+    t.className="banner warn show";
+  }else{
+    setTimeout(()=>{
+      if(!voice && synth.getVoices().length===0){
+        t.textContent="⚠️ No voice found. On your phone, open Settings → Text-to-speech and install the English voice (then reopen this page).";
+        t.className="banner warn show";
+      }
+    },2000);
+  }
+  if(window.isSecureContext===false){
+    m.textContent="⚠️ "+micHelp({name:"Security"});
+    m.className="banner warn show";
+  }else if(!SR){
+    m.textContent="ℹ️ This browser has no built-in speech recognition, so the book uses the Whisper AI engine (it downloads a small model once, so the first check needs internet).";
+    m.className="banner info show";
+  }
+  const sel=document.getElementById("engSel");
+  sel.value=ENGINE;
+  sel.onchange=()=>{ ENGINE=sel.value; try{localStorage.setItem("eh_engine",ENGINE);}catch(e){} };
+  document.getElementById("btnTest").onclick=testMic;
+  document.getElementById("btnOffline").onclick=prepareOffline;
+  if(SR && SR.available){
+    try{ SR.available({langs:["en-US"],processLocally:true}).then(s=>{ LOCAL_OK=(s==="available"); }).catch(()=>{}); }catch(e){}
+  }
+})();
+</script>
+</body>
+</html>
